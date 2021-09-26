@@ -2,6 +2,8 @@
 
 === Description
 
+This is a microproject about a car salesman. There are currently four entities including a customer, a car, a salesman and one entity for managing bought cars. Each of these entites has a repository with functions to save, update, delete and find entries within an entry. There are also services for each entity with routes to every method and http files for performing the requests. Additionally there are also unit-tests for each entity, integration-tests with assertj-core for the repositories and system-tests using RESTassured for the endpoints.
+
 === Class Diagram
 
 [plantuml, cld, png, align=left]
