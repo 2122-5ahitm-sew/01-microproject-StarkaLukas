@@ -1,0 +1,66 @@
+@startuml
+enum Brand {
+TOYOTA,
+    MERCEDES,
+    FORD,
+    SKODA,
+    CITROEN,
+    BMW,
+    SUBARU,
+    PORSCHE,
+    FERRARI,
+    VW,
+    MITSUBISHI,
+    HONDA,
+    MAZDA,
+    HYUNDAI,
+    CHEVROLET,
+    KIA,
+    OPEL,
+    SEAT,
+    FIAT,
+    LEXUS,
+    AUDI
+}
+
+class Car {
+    - id: Long
+    - model: String
+    - brand: Brand
+    - color: String
+    - hp: int
+    - price: double
+}
+
+class Customer {
+    - id: Long
+    - firstName: String
+    - lastName: String
+    - dateOfBirth: LocalDate
+    - place: String
+    - street: String
+    - zip: String
+    - budget: double
+}
+
+class Sale {
+    - car: Car;
+    - customer: Customer
+    - salesman: Salesman
+    - contractDate: LocalDate
+    - discount: double
+}
+
+class Salesman {
+    - id: Long
+    - firstName: String
+    - lastName: String
+    - hireDate: LocalDate
+    - salary: double
+}
+
+Car -down-> Brand
+Sale "1" -right-> "1" Car : is sold <
+Sale "*" --> "1" Salesman : sells <
+Sale "*" -left-> "1" Customer : buys <
+@enduml
