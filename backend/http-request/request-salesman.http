@@ -1,0 +1,61 @@
+### Get Salesman 1 JSON
+
+GET localhost:8080/api-salesman/1
+Accept: application/json
+
+### Get Salesmen JSON
+
+GET localhost:8080/api-salesman
+Accept: application/json
+
+### Add Salesman JSON
+
+POST localhost:8080/api-salesman
+Content-Type: application/json
+Accept: application/json
+
+{
+  "firstName": "Testus",
+  "lastName": "McTest",
+  "hireDate": "12-10-1990",
+  "salary": 2700
+}
+
+### Update Salesman Fail JSON
+
+PUT localhost:8080/api-salesman/5
+Content-Type: application/json
+Accept: application/json
+
+{
+  "firstName": "Testus",
+  "lastName": "McTest",
+  "hireDate": "12-10-1990",
+  "salary": 2700
+}
+
+### Update Salesman Success JSON
+
+PUT localhost:8080/api-salesman/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "firstName": "Sally",
+  "lastName": "McSale",
+  "hireDate": "13-10-1990",
+  "salary": 2700
+}
+
+### Delete Salesman Fail JSON
+
+DELETE localhost:8080/api-salesman/5
+Content-Type: application/json
+Accept: application/json
+
+
+### Delete Salesman Success JSON
+
+DELETE localhost:8080/api-salesman/1
+Content-Type: application/json
+Accept: application/jsonm
