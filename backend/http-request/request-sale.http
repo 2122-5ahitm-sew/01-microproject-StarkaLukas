@@ -1,0 +1,9 @@
+### Get Sale 10 JSON
+
+GET localhost:8080/api-sale/10
+Accept: application/json
+
+### Get Sales JSON
+
+GET localhost:8080/api-sale
+Accept: application/json
