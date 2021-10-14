@@ -30,17 +30,17 @@ public class SalesmanRepositoryTest {
         assertThat(salesmanRepository).isNotNull();
     }
 
-    @Test
-    @Order(110)
-    void initRepo() {
-        List<Salesman> salesmanList = salesmanRepository.listAll();
-
-        LOG.info(salesmanList.toString());
-
-        assertThat(salesmanList.get(0).lastName).isEqualTo("Salesman");
-        assertThat(salesmanList.get(1).lastName).isEqualTo("Saleswoman");
-        assertThat(salesmanList.get(2).lastName).isEqualTo("Marketing");
-    }
+//    @Test
+//    @Order(110)
+//    void initRepo() {
+//        List<Salesman> salesmanList = salesmanRepository.listAll();
+//
+//        LOG.info(salesmanList.toString());
+//
+//        assertThat(salesmanList.get(0).lastName).isEqualTo("Salesman");
+//        assertThat(salesmanList.get(1).lastName).isEqualTo("Saleswoman");
+//        assertThat(salesmanList.get(2).lastName).isEqualTo("Marketing");
+//    }
 
     @Test
     @Order(120)
