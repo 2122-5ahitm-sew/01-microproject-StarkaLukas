@@ -1,0 +1,72 @@
+### Get Customer 7 JSON
+
+GET localhost:8080/api-customer/7
+Accept: application/json
+
+### Get Customers JSON
+
+GET localhost:8080/api-customer
+Accept: application/json
+
+### Add Customer JSON
+
+POST localhost:8080/api-customer
+Content-Type: application/json
+Accept: application/json
+
+{
+  "id": 3,
+  "firstName": "Testus",
+  "lastName": "McTest",
+  "dateOfBirth": "12-10-1990",
+  "place": "Place",
+  "street": "Street 24",
+  "zip": "AT-4040",
+  "budget": 5000
+}
+
+### Update Customer Fail JSON
+
+PUT localhost:8080/api-customer/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "id": 4,
+  "firstName": "Testus",
+  "lastName": "McTest",
+  "dateOfBirth": "12-10-1990",
+  "place": "Place",
+  "street": "Street 24",
+  "zip": "AT-4040",
+  "budget": 5000
+}
+
+### Update Customer Success JSON
+
+PUT localhost:8080/api-customer/7
+Content-Type: application/json
+Accept: application/json
+
+{
+  "id": 3,
+  "firstName": "Custi",
+  "lastName": "McCustom",
+  "dateOfBirth": "13-10-1990",
+  "place": "Place",
+  "street": "Street 25",
+  "zip": "AT-4040",
+  "budget": 5000
+}
+
+### Delete Customer Fail JSON
+
+DELETE localhost:8080/api-customer/1
+Content-Type: application/json
+Accept: application/json
+
+### Delete Customer Success JSON
+
+DELETE localhost:8080/api-customer/7
+Content-Type: application/json
+Accept: application/json
