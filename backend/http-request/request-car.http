@@ -1,0 +1,66 @@
+### Get Car 4 JSON
+
+GET localhost:8080/api-car/4
+Accept: application/json
+
+### Get Cars JSON
+
+GET localhost:8080/api-car
+Accept: application/json
+
+
+### Add Car JSON
+
+POST localhost:8080/api-car
+Content-Type: application/json
+Accept: application/json
+
+{
+  "model": "A5 SB 3,0 TDI quattro",
+  "brand": "AUDI",
+  "color": "Dark grey",
+  "hp": 245,
+  "price": 19490.00
+}
+
+
+### Update Car Fail JSON
+
+PUT localhost:8080/api-car/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "model": "Sportage Active 2,0",
+  "brand": "KIA",
+  "color": "White",
+  "hp": 136,
+  "price": 8990.00
+}
+
+### Update Car Success JSON
+
+PUT localhost:8080/api-car/4
+Content-Type: application/json
+Accept: application/json
+
+{
+  "model": "Sportage Active 2,0",
+  "brand": "KIA",
+  "color": "White",
+  "hp": 136,
+  "price": 8990.00
+}
+
+### Delete Car Fail JSON
+
+DELETE localhost:8080/api-car/1
+Content-Type: application/json
+Accept: application/json
+
+
+### Delete Car Success JSON
+
+DELETE localhost:8080/api-car/4
+Content-Type: application/json
+Accept: application/json
