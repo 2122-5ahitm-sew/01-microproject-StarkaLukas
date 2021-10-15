@@ -15,7 +15,6 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "id": 3,
   "first_name": "Testus",
   "last_name": "McTest",
   "date_of_birth": "12-10-1990",
