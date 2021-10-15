@@ -31,22 +31,22 @@ public class CarRepositoryTest {
         assertThat(carRepository).isNotNull();
     }
 
-//    @Test
-//    @Order(110)
-//    void initRepo() {
-//        List<Car> carList = carRepository.listAll();
-//
-//        LOG.info(carList.toString());
-//
-//        assertThat(carList.get(0).brand).isEqualTo(Brand.MERCEDES);
-//        assertThat(carList.get(0).model).isEqualTo("E 240 Elegance");
-//
-//        assertThat(carList.get(1).brand).isEqualTo(Brand.OPEL);
-//        assertThat(carList.get(1).model).isEqualTo("Corsa City");
-//
-//        assertThat(carList.get(2).brand).isEqualTo(Brand.VW);
-//        assertThat(carList.get(2).model).isEqualTo("Golf Comfortline");
-//    }
+    @Test
+    @Order(110)
+    void initRepo() {
+        List<Car> carList = carRepository.listAll();
+
+        LOG.info(carList.toString());
+
+        assertThat(carList.get(0).brand).isEqualTo(Brand.MERCEDES);
+        assertThat(carList.get(0).model).isEqualTo("E 240 Elegance");
+
+        assertThat(carList.get(1).brand).isEqualTo(Brand.OPEL);
+        assertThat(carList.get(1).model).isEqualTo("Corsa City");
+
+        assertThat(carList.get(2).brand).isEqualTo(Brand.VW);
+        assertThat(carList.get(2).model).isEqualTo("Golf Comfortline");
+    }
 
     @Test
     @Order(120)

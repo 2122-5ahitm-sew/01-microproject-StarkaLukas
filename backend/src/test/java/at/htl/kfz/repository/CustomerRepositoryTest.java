@@ -34,18 +34,18 @@ public class CustomerRepositoryTest {
         assertThat(customerRepository).isNotNull();
     }
 
-//    @Test
-//    @Order(110)
-//    void initRepo() {
-//        List<Customer> customerList = customerRepository.listAll();
-//
-//        LOG.info(customerList.toString());
-//
-//
-//        assertThat(customerList.get(0).lastName).isEqualTo("Doe");
-//        assertThat(customerList.get(1).lastName).isEqualTo("Roe");
-//        assertThat(customerList.get(2).lastName).isEqualTo("Coolguy");
-//    }
+    @Test
+    @Order(110)
+    void initRepo() {
+        List<Customer> customerList = customerRepository.listAll();
+
+        LOG.info(customerList.toString());
+
+
+        assertThat(customerList.get(0).lastName).isEqualTo("Doe");
+        assertThat(customerList.get(1).lastName).isEqualTo("Roe");
+        assertThat(customerList.get(2).lastName).isEqualTo("Coolguy");
+    }
 
     @Test
     @Order(120)

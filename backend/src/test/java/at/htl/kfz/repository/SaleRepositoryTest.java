@@ -30,13 +30,13 @@ public class SaleRepositoryTest {
         assertThat(saleRepository).isNotNull();
     }
 
-//    @Test
-//    @Order(110)
-//    void initRepo() {
-//        LOG.info(saleRepository.listAll().toString());
-//
-//        assertThat(saleRepository.listAll().size()).isEqualTo(3);
-//    }
+    @Test
+    @Order(110)
+    void initRepo() {
+        LOG.info(saleRepository.listAll().toString());
+
+        assertThat(saleRepository.listAll().size()).isEqualTo(3);
+    }
 
     @Test
     @Order(120)
