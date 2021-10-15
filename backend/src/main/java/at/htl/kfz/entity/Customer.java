@@ -3,15 +3,24 @@ package at.htl.kfz.entity;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
 import javax.json.bind.annotation.JsonbDateFormat;
+import javax.json.bind.annotation.JsonbProperty;
 import javax.persistence.Entity;
+import java.time.Instant;
 import java.time.LocalDate;
 
 @Entity
 public class Customer extends PanacheEntity {
+
+    @JsonbProperty("first_name")
     public String firstName;
+
+    @JsonbProperty("last_name")
     public String lastName;
+
+    @JsonbProperty("date_of_birth")
     @JsonbDateFormat("dd-MM-yyyy")
     public LocalDate dateOfBirth;
+
     public String place;
     public String street;
     public String zip;

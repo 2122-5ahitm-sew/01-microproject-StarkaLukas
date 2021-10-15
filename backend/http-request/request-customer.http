@@ -16,9 +16,9 @@ Accept: application/json
 
 {
   "id": 3,
-  "firstName": "Testus",
-  "lastName": "McTest",
-  "dateOfBirth": "12-10-1990",
+  "first_name": "Testus",
+  "last_name": "McTest",
+  "date_of_birth": "12-10-1990",
   "place": "Place",
   "street": "Street 24",
   "zip": "AT-4040",
@@ -33,9 +33,9 @@ Accept: application/json
 
 {
   "id": 4,
-  "firstName": "Testus",
-  "lastName": "McTest",
-  "dateOfBirth": "12-10-1990",
+  "first_name": "Testus",
+  "last_name": "McTest",
+  "date_of_birth": "12-10-1990",
   "place": "Place",
   "street": "Street 24",
   "zip": "AT-4040",
@@ -50,9 +50,9 @@ Accept: application/json
 
 {
   "id": 3,
-  "firstName": "Custi",
-  "lastName": "McCustom",
-  "dateOfBirth": "13-10-1990",
+  "first_name": "Custi",
+  "last_name": "McCustom",
+  "date_of_birth": "13-10-1990",
   "place": "Place",
   "street": "Street 25",
   "zip": "AT-4040",

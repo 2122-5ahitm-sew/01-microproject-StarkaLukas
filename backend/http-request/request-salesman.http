@@ -15,9 +15,9 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "firstName": "Testus",
-  "lastName": "McTest",
-  "hireDate": "12-10-1990",
+  "first_name": "Testus",
+  "last_name": "McTest",
+  "hire_date": "12-10-1990",
   "salary": 2700
 }
 
@@ -28,9 +28,9 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "firstName": "Testus",
-  "lastName": "McTest",
-  "hireDate": "12-10-1990",
+  "first_name": "Testus",
+  "last_name": "McTest",
+  "hire_date": "12-10-1990",
   "salary": 2700
 }
 
@@ -41,9 +41,9 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "firstName": "Sally",
-  "lastName": "McSale",
-  "hireDate": "13-10-1990",
+  "first_name": "Sally",
+  "last_name": "McSale",
+  "hire_date": "13-10-1990",
   "salary": 2700
 }
 
