@@ -6,9 +6,11 @@ import at.htl.kfz.repository.CustomerRepository;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
 
 @Path("api-customer")
 public class CustomerService {
@@ -21,16 +23,25 @@ public class CustomerService {
     @Produces({
             MediaType.APPLICATION_JSON
     })
-    public Customer getCustomer(@PathParam("id") Long id) {
-        return customerRepository.findById(id);
+    public Response findById(@PathParam("id") Long id) {
+        Customer foundCustomer = customerRepository.findById(id);
+
+        if (foundCustomer != null) {
+            return Response.ok(foundCustomer).build();
+        }
+
+        return Response
+                .status(Response.Status.BAD_REQUEST)
+                .header("Reason", String.format("Customer with id %d was not found.", id))
+                .build();
     }
 
     @GET
     @Produces({
             MediaType.APPLICATION_JSON
     })
-    public List<Customer> getCustomers() {
-        return customerRepository.listAll();
+    public Response listAll() {
+        return Response.ok(customerRepository.listAll()).build();
     }
 
     @POST
@@ -41,9 +52,23 @@ public class CustomerService {
             MediaType.APPLICATION_JSON
     })
     @Transactional
-    public Customer addCustomer(Customer customer) {
+    public Response create(@Context UriInfo uriInfo, Customer customer) {
+        if (customerRepository.findById(customer.id) != null) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .header("Reason", String.format("Customer with id %d already exists.", customer.id))
+                    .build();
+        }
+
         customerRepository.persist(customer);
-        return customer;
+
+        URI uri = uriInfo.getAbsolutePathBuilder().path("" + customer.id).build();
+
+        if (customer.id != 0) {
+            return Response.created(uri).build();
+        }
+
+        return Response.status(Response.Status.BAD_REQUEST).build();
     }
 
     @PUT
@@ -55,7 +80,7 @@ public class CustomerService {
             MediaType.APPLICATION_JSON
     })
     @Transactional
-    public Customer updateCustomer(@PathParam("id") Long id, Customer customer) {
+    public Response update(@PathParam("id") Long id, Customer customer) {
         Customer receivedCustomer = customerRepository.findById(id);
 
         if (receivedCustomer != null) {
@@ -66,9 +91,14 @@ public class CustomerService {
             receivedCustomer.place = customer.place;
             receivedCustomer.street = customer.street;
             receivedCustomer.zip = customer.zip;
+
+            return Response.ok(receivedCustomer).build();
         }
 
-        return receivedCustomer;
+        return Response
+                .status(Response.Status.BAD_REQUEST)
+                .header("Reason", String.format("Customer with id %d was not found", customer.id))
+                .build();
     }
 
     @DELETE
@@ -80,14 +110,27 @@ public class CustomerService {
             MediaType.APPLICATION_JSON
     })
     @Transactional
-    public Customer deleteCustomer(@PathParam("id") Long id) {
+    public Response delete(@PathParam("id") Long id) {
         Customer receivedCustomer = customerRepository.findById(id);
 
         if (receivedCustomer != null) {
             customerRepository.delete(receivedCustomer);
+            Customer foundCustomerAfterDeletion = customerRepository.findById(id);
+
+            if (foundCustomerAfterDeletion == null) {
+                return Response.ok(receivedCustomer).build();
+            }
+
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .header("Reason", String.format("Customer with id %d could not be deleted.", id))
+                    .build();
         }
 
-        return receivedCustomer;
+        return Response
+                .status(Response.Status.BAD_REQUEST)
+                .header("Reason", String.format("Customer with id %d was not found.", id))
+                .build();
     }
 
 }

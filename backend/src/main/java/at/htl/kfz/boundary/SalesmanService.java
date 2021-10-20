@@ -1,13 +1,17 @@
 package at.htl.kfz.boundary;
 
+import at.htl.kfz.entity.Car;
 import at.htl.kfz.entity.Salesman;
 import at.htl.kfz.repository.SalesmanRepository;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
 import java.util.List;
 
 @Path("api-salesman")
@@ -21,16 +25,25 @@ public class SalesmanService {
     @Produces({
             MediaType.APPLICATION_JSON
     })
-    public Salesman getSalesman(@PathParam("id") Long id) {
-        return salesmanRepository.findById(id);
+    public Response findById(@PathParam("id") Long id) {
+        Salesman foundSalesman = salesmanRepository.findById(id);
+
+        if (foundSalesman != null) {
+            return Response.ok(foundSalesman).build();
+        }
+
+        return Response
+                .status(Response.Status.BAD_REQUEST)
+                .header("Reason", String.format("Salesman with id %d was not found.", id))
+                .build();
     }
 
     @GET
     @Produces({
             MediaType.APPLICATION_JSON
     })
-    public List<Salesman> getSalesmen() {
-        return salesmanRepository.listAll();
+    public Response listAll() {
+        return Response.ok(salesmanRepository.listAll()).build();
     }
 
     @POST
@@ -41,9 +54,23 @@ public class SalesmanService {
             MediaType.APPLICATION_JSON
     })
     @Transactional
-    public Salesman addSalesman(Salesman salesman) {
+    public Response create(@Context UriInfo uriInfo, Salesman salesman) {
+        if (salesmanRepository.findById(salesman.id) != null) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .header("Reason", String.format("Salesman with id %d already exists.", salesman.id))
+                    .build();
+        }
+
         salesmanRepository.persist(salesman);
-        return salesman;
+
+        URI uri = uriInfo.getAbsolutePathBuilder().path("" + salesman.id).build();
+
+        if (salesman.id != 0) {
+            return Response.created(uri).build();
+        }
+
+        return Response.status(Response.Status.BAD_REQUEST).build();
     }
 
     @PUT
@@ -55,7 +82,7 @@ public class SalesmanService {
             MediaType.APPLICATION_JSON
     })
     @Transactional
-    public Salesman updateSalesman(@PathParam("id") Long id, Salesman salesman) {
+    public Response update(@PathParam("id") Long id, Salesman salesman) {
         Salesman receivedSalesman = salesmanRepository.findById(id);
 
         if (receivedSalesman != null) {
@@ -63,9 +90,14 @@ public class SalesmanService {
             receivedSalesman.lastName = salesman.lastName;
             receivedSalesman.salary = salesman.salary;
             receivedSalesman.hireDate = salesman.hireDate;
+
+            return Response.ok(receivedSalesman).build();
         }
 
-        return receivedSalesman;
+        return Response
+                .status(Response.Status.BAD_REQUEST)
+                .header("Reason", String.format("Salesman with id %d was not found", salesman.id))
+                .build();
     }
 
     @DELETE
@@ -77,9 +109,26 @@ public class SalesmanService {
             MediaType.APPLICATION_JSON
     })
     @Transactional
-    public Salesman deleteSalesman(@PathParam("id") Long id) {
+    public Response delete(@PathParam("id") Long id) {
         Salesman receivedSalesman = salesmanRepository.findById(id);
+
+        if (receivedSalesman != null) {
         salesmanRepository.deleteById(id);
-        return receivedSalesman;
+        Salesman foundSalesmanAfterDeletion = salesmanRepository.findById(id);
+
+        if (foundSalesmanAfterDeletion == null) {
+            return Response.ok(receivedSalesman).build();
+        }
+
+        return Response
+                .status(Response.Status.BAD_REQUEST)
+                .header("Reason", String.format("Salesman with id %d could not be deleted.", id))
+                .build();
+        }
+
+        return Response
+                .status(Response.Status.BAD_REQUEST)
+            .header("Reason", String.format("Salesman with id %d was not found.", id))
+            .build();
     }
 }

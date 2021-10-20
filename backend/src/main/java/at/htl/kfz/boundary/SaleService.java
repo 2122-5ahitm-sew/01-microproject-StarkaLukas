@@ -9,8 +9,11 @@ import at.htl.kfz.repository.SaleRepository;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -24,16 +27,25 @@ public class SaleService {
     @Produces({
             MediaType.APPLICATION_JSON
     })
-    public Sale getSale(@PathParam("id") Long id) {
-        return saleRepository.findById(id);
+    public Response findById(@PathParam("id") Long id) {
+        Sale foundSale = saleRepository.findById(id);
+
+        if (foundSale != null) {
+            return Response.ok(foundSale).build();
+        }
+
+        return Response
+                .status(Response.Status.BAD_REQUEST)
+                .header("Reason", String.format("Sale with id %d was not found.", id))
+                .build();
     }
 
     @GET
     @Produces({
             MediaType.APPLICATION_JSON
     })
-    public List<Sale> getSales() {
-        return saleRepository.listAll();
+    public Response listAll() {
+        return Response.ok(saleRepository.listAll()).build();
     }
 
     @POST
@@ -44,10 +56,23 @@ public class SaleService {
             MediaType.APPLICATION_JSON
     })
     @Transactional
-    public Sale addSale(Sale sale) {
+    public Response create(@Context UriInfo uriInfo, Sale sale) {
+        if (saleRepository.findById(sale.id) != null) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .header("Reason", String.format("Sale with id %d already exists.", sale.id))
+                    .build();
+        }
+
         saleRepository.persist(sale);
 
-        return sale;
+        URI uri = uriInfo.getAbsolutePathBuilder().path("" + sale.id).build();
+
+        if (sale.id != 0) {
+            return Response.created(uri).build();
+        }
+
+        return Response.status(Response.Status.BAD_REQUEST).build();
     }
 
     @PUT
@@ -59,7 +84,7 @@ public class SaleService {
             MediaType.APPLICATION_JSON
     })
     @Transactional
-    public Sale updateSale(@PathParam("id") Long id, Sale sale) {
+    public Response update(@PathParam("id") Long id, Sale sale) {
         Sale receivedSale = saleRepository.findById(id);
 
         if (receivedSale != null) {
@@ -68,13 +93,18 @@ public class SaleService {
             receivedSale.customer = sale.customer;
             receivedSale.contractDate = sale.contractDate;
             receivedSale.discount = sale.discount;
+
+            return Response.ok(receivedSale).build();
         }
 
-        return receivedSale;
+        return Response
+                .status(Response.Status.BAD_REQUEST)
+                .header("Reason", String.format("Sale with id %d was not found", sale.id))
+                .build();
     }
 
     @DELETE
-    @Path("{id}")
+    @Path("/{id}")
     @Consumes({
             MediaType.APPLICATION_JSON
     })
@@ -82,13 +112,26 @@ public class SaleService {
             MediaType.APPLICATION_JSON
     })
     @Transactional
-    public Sale deleteSale(Long id) {
+    public Response delete(Long id) {
         Sale receivedSale = saleRepository.findById(id);
 
         if (receivedSale != null) {
             saleRepository.delete(receivedSale);
+            Sale foundSaleAfterDeletion = saleRepository.findById(id);
+
+            if (foundSaleAfterDeletion == null) {
+                return Response.ok(receivedSale).build();
+            }
+
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .header("Reason", String.format("Sale with id %d could not be deleted.", id))
+                    .build();
         }
 
-        return receivedSale;
+        return Response
+                .status(Response.Status.BAD_REQUEST)
+                .header("Reason", String.format("Sale with id %d was not found.", id))
+                .build();
     }
 }
