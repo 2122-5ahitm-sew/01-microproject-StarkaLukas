@@ -8,7 +8,6 @@ import javax.json.bind.annotation.JsonbDateFormat;
 import javax.json.bind.annotation.JsonbProperty;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import java.time.Instant;
 import java.time.LocalDate;
 
 @Entity

@@ -5,7 +5,6 @@ import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import javax.json.bind.annotation.JsonbDateFormat;
 import javax.json.bind.annotation.JsonbProperty;
 import javax.persistence.Entity;
-import java.time.Instant;
 import java.time.LocalDate;
 
 @Entity
